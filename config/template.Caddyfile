@@ -1,0 +1,20 @@
+${lang}.${domain} {
+    ${tls}
+    redir {
+        if {uri} is /   
+        /wiki/${main_page}
+    }
+
+    proxy / https://${lang}.wikipedia.org
+}
+
+${lang}.m.${domain} {
+    ${tls}
+    redir {
+        if {uri} is /   
+        /wiki/${main_page}
+    }
+
+    proxy / https://${lang}.m.wikipedia.org
+}
+
