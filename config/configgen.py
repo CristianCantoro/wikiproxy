@@ -4,6 +4,20 @@ import json
 import argparse
 from string import Template
 
+
+def include_file(source_name, target_fp):
+    """
+    Includes the contents of the source file
+    named source_name writing to a target file.
+    target_fp must be a file pointer.
+    """
+
+    with open(source_name, 'r') as sourcefile:
+        text_to_include = sourcefile.read()
+
+    target_fp.write(text_to_include)
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -13,9 +27,17 @@ if __name__ == '__main__':
     parser.add_argument("-c", "--config",
         default='config.json',
         help="The configuration file [default: config.json]")    
+    parser.add_argument("--head",
+        action='store',
+        help="Add the content of HEAD file to the beginning"
+             "of the generated config file")
     parser.add_argument("-t", "--template",
         default='template.Caddyfile',
         help="The configuration file template [default: template.Caddyfile]")    
+    parser.add_argument("--tail",
+        action='store',
+        help="Add the content of TAIL file to the end"
+             "of the generated config file")
     parser.add_argument("--tls",
         help="The e-mail address for TLS certificates.")    
     parser.add_argument("-o", "--output",
@@ -36,9 +58,15 @@ if __name__ == '__main__':
         if args.tls is not None:
             tls_string = 'tls {}'.format(args.tls)
 
+        if args.head is not None:
+            include_file(args.head, outfile)
+
         for lang, main in config.items():
             rendered = template.substitute(domain=args.domain,
                                            tls=tls_string,
                                            lang=lang,
                                            main_page=main)
             outfile.write(rendered)
+
+        if args.tail is not None:
+            include_file(args.tail, outfile)
