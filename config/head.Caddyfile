@@ -1,6 +1,6 @@
 vikiansiklopedi.org {
 	redir {
-		/ to https://github.com/CristianCantoro/wikimirror 303
+		/ https://github.com/CristianCantoro/wikimirror 303
 	}
 }
 
