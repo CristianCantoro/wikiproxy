@@ -1,7 +1,6 @@
 vikiansiklopedi.org {
-	redir {
-		/ https://github.com/CristianCantoro/wikimirror 303
-	}
+    redir {
+        / https://github.com/CristianCantoro/wikimirror 303
+    }
 }
-
 
