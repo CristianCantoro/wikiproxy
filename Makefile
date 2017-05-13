@@ -11,6 +11,14 @@ configfile:
 		--head head.Caddyfile
 	@echo '->  success'
 
+install: install-systemd
+
+install-systemd:
+	cp init/caddy.systemd /etc/systemd/system/
+
+install-upstart:
+	cp init/caddy.upstart /etc/init/
+
 mirror:
 	docker run --rm \
 		--name wikimirror \

@@ -1,0 +1,30 @@
+# systemd: Start containers automatically
+# https://docs.docker.com/engine/admin/host_integration/
+#
+# Runninng Docker containers as systemd services
+# https://goldmann.pl/blog/
+#   2014/07/30/running-docker-containers-as-systemd-services/
+#
+# systemd-docker
+# https://github.com/ibuildthecloud/systemd-docker
+[Unit]
+Description=Caddy web server
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=www-data
+Restart=on-failure
+RestartSec=10
+Type=notify
+NotifyAccess=all
+TimeoutStartSec=120
+TimeoutStopSec=15
+ExecStart=/opt/bin/systemd-docker run --rm --name %n nginx
+# ExecStartPre=-/usr/bin/docker kill abiosoft/caddy
+# ExecStartPre=-/usr/bin/docker rm abiosoft/caddy
+# ExecStart=/usr/bin/docker run --rm --name wikimirror -p 80:80 abiosoft/caddy
+# ExecStop=/usr/bin/docker stop abiosoft/caddy
+
+[Install]
+WantedBy=multi-user.target
