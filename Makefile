@@ -12,7 +12,7 @@ configfile:
 	@echo '->  success'
 
 mirror:
-	docker run --rm -d \
+	docker run --rm \
 		--name wikimirror \
 		-v "$(PWD)"/caddy/Caddyfile:/etc/Caddyfile \
 		-v "$(HOME)"/.caddy:/root/.caddy \
@@ -24,10 +24,10 @@ stop:
 
 test:
 	docker run \
-		-v "$(PWD)"/caddy/Caddyfile:/etc/Caddyfile \
+		-v "$(PWD)"/caddy/test.Caddyfile:/etc/Caddyfile \
 		-v "$(HOME)"/.caddy:/root/.caddy \
 		-p 80:80 -p 443:443 \
-		abiosoft/caddy
+		abiosoft/caddy --ca https://acme-staging.api.letsencrypt.org/directory
 
 validate:
 	@echo '2. Validate the configfile... '

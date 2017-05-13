@@ -21,52 +21,63 @@ def include_file(source_name, target_fp):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("domain",
+    subparsers = parser.add_subparsers(title='subcommands',
+                                       dest='subcommand',
+                                       description='valid subcommands',
+                                       help='additional help')
+    subparser_config = subparsers.add_parser('config')
+    subparser_test = subparsers.add_parser('test')
+
+    subparser_config.add_argument("domain",
         metavar='<domain>',
         help="The domain name of the mirror")
-    parser.add_argument("-c", "--config",
+    subparser_config.add_argument("-c", "--config",
         default='config.json',
         help="The configuration file [default: config.json]")    
-    parser.add_argument("--head",
+    subparser_config.add_argument("--head",
         action='store',
         help="Add the content of HEAD file to the beginning"
              "of the generated config file")
-    parser.add_argument("-t", "--template",
+    subparser_config.add_argument("-t", "--template",
         default='template.Caddyfile',
         help="The configuration file template [default: template.Caddyfile]")    
-    parser.add_argument("--tail",
+    subparser_config.add_argument("--tail",
         action='store',
         help="Add the content of TAIL file to the end"
              "of the generated config file")
-    parser.add_argument("--tls",
+    subparser_config.add_argument("--tls",
         help="The e-mail address for TLS certificates.")    
-    parser.add_argument("-o", "--output",
+    subparser_config.add_argument("-o", "--output",
         default='../caddy/Caddyfile',
         help="The name of the resulting Caddy config file [default: ../caddy/Caddyfile]")    
 
     args = parser.parse_args()
 
-    with open(args.config) as conf_file:
-        config = json.load(conf_file)
+    if args.subcommand == 'config':
+        with open(args.config) as conf_file:
+            config = json.load(conf_file)
 
-    with open(args.template) as template_file:
-        template = Template(template_file.read())
+        with open(args.template) as template_file:
+            template = Template(template_file.read())
 
-    with open(args.output, 'w') as outfile:
+        with open(args.output, 'w') as outfile:
 
-        tls_string = ''
-        if args.tls is not None:
-            tls_string = 'tls {}'.format(args.tls)
+            tls_string = ''
+            if args.tls is not None:
+                tls_string = 'tls {}'.format(args.tls)
 
-        if args.head is not None:
-            include_file(args.head, outfile)
+            if args.head is not None:
+                include_file(args.head, outfile)
 
-        for lang, main in config.items():
-            rendered = template.substitute(domain=args.domain,
-                                           tls=tls_string,
-                                           lang=lang,
-                                           main_page=main)
-            outfile.write(rendered)
+            for lang, main in config.items():
+                rendered = template.substitute(domain=args.domain,
+                                               tls=tls_string,
+                                               lang=lang,
+                                               main_page=main)
+                outfile.write(rendered)
 
-        if args.tail is not None:
-            include_file(args.tail, outfile)
+            if args.tail is not None:
+                include_file(args.tail, outfile)
+
+    else:
+        pass
