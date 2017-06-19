@@ -16,7 +16,8 @@ This should work like this:
 
 ## Known limitations
 
-* wikilinks point to the respective domain at wikipedia.org, this issue is tracked on [Phabricator][Phabricator] as [Core should be aware of the domain it is running on and render mobile domains where necessary][T156847]
+* <s>wikilinks point to the respective domain at wikipedia.org, this issue is tracked on [Phabricator][Phabricator] as [Core should be aware of the domain it is running on and render mobile domains where necessary][T156847]</s> (wikilinks seems correct, even if the bug is still valid).
+* when visiting from mobile, the user gets redirected to `<lang>.m.wikipedia.org` regardless of the originating doman, the right thing to do would be redirect users to `<lang>.m.<original_domain.tld>`).
 * given the [rate limits for certificates from Let's Encrypt][LE_rate_limit] of 20 certificates and the fact that each subdomain `<lang>.wikipedia.org` has its own certificate and also a corresponding mobile website at `<lang>.m.wikipedia.org`, so only 10 languages are supported at the moment. Currently [June 2017] they are the 9 biggest Wikipedias by number of articles and Turkish Wikipedia. See also this thread ["How to serve many subdomains?"][CaddyForum] on the Caddy community forum.
 
 [CaddyForum]: https://caddy.community/t/how-to-serve-many-subdomains/2169
