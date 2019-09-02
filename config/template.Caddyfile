@@ -1,20 +1,20 @@
 ${lang}.${domain} {
-    ${tls}
     redir {
-        if {uri} is /   
+        if {uri} is /
         /wiki/${main_page}
     }
 
     proxy / https://${lang}.wikipedia.org
+    import config.d/log.Caddyfile
 }
 
 ${lang}.m.${domain} {
-    ${tls}
     redir {
-        if {uri} is /   
+        if {uri} is /
         /wiki/${main_page}
     }
 
     proxy / https://${lang}.m.wikipedia.org
+    import config.d/log.Caddyfile
 }
 
