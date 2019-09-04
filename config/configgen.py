@@ -47,6 +47,9 @@ if __name__ == '__main__':
              "of the generated config file")
     subparser_config.add_argument("--tls-email",
         help="The e-mail address for TLS certificates.")
+    subparser_config.add_argument("--dns-provider",
+        required=True,
+        help="DNS provider for wildcard certificate.")
     subparser_config.add_argument("-o", "--output",
         default='../caddy/Caddyfile',
         help="The name of the resulting Caddy config file [default: ../caddy/Caddyfile]")
@@ -69,7 +72,10 @@ if __name__ == '__main__':
             if args.head is not None:
                 with open(args.head) as head_file:
                     template_head = Template(head_file.read())
-                rendered_head = template_head.substitute(tls_email=tls_email)
+                rendered_head = template_head.substitute(
+                    dns_provider=args.dns_provider,
+                    tls_email=tls_email
+                    )
                 outfile.write(rendered_head)
 
             for lang, main in config.items():
