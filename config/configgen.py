@@ -62,15 +62,18 @@ if __name__ == '__main__':
 
         with open(args.output, 'w') as outfile:
 
-            if args.tls_email is None:
+            tls_email = args.tls_email
+            if tls_email is None:
                 tls_email = 'off'
 
             if args.head is not None:
-                include_file(args.head, outfile)
+                with open(args.head) as head_file:
+                    template_head = Template(head_file.read())
+                rendered_head = template_head.substitute(tls_email=tls_email)
+                outfile.write(rendered_head)
 
             for lang, main in config.items():
                 rendered = template.substitute(domain=args.domain,
-                                               tls_email=tls_email,
                                                lang=lang,
                                                main_page=main)
                 outfile.write(rendered)
