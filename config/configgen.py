@@ -33,23 +33,23 @@ if __name__ == '__main__':
         help="The domain name of the mirror")
     subparser_config.add_argument("-c", "--config",
         default='config.json',
-        help="The configuration file [default: config.json]")    
+        help="The configuration file [default: config.json]")
     subparser_config.add_argument("--head",
         action='store',
         help="Add the content of HEAD file to the beginning"
              "of the generated config file")
     subparser_config.add_argument("-t", "--template",
         default='template.Caddyfile',
-        help="The configuration file template [default: template.Caddyfile]")    
+        help="The configuration file template [default: template.Caddyfile]")
     subparser_config.add_argument("--tail",
         action='store',
         help="Add the content of TAIL file to the end"
              "of the generated config file")
-    subparser_config.add_argument("--tls",
-        help="The e-mail address for TLS certificates.")    
+    subparser_config.add_argument("--tls-email",
+        help="The e-mail address for TLS certificates.")
     subparser_config.add_argument("-o", "--output",
         default='../caddy/Caddyfile',
-        help="The name of the resulting Caddy config file [default: ../caddy/Caddyfile]")    
+        help="The name of the resulting Caddy config file [default: ../caddy/Caddyfile]")
 
     args = parser.parse_args()
 
@@ -62,16 +62,15 @@ if __name__ == '__main__':
 
         with open(args.output, 'w') as outfile:
 
-            tls_string = ''
-            if args.tls is not None:
-                tls_string = 'tls {}'.format(args.tls)
+            if args.tls_email is None:
+                tls_email = 'off'
 
             if args.head is not None:
                 include_file(args.head, outfile)
 
             for lang, main in config.items():
                 rendered = template.substitute(domain=args.domain,
-                                               tls=tls_string,
+                                               tls_email=tls_email,
                                                lang=lang,
                                                main_page=main)
                 outfile.write(rendered)
@@ -81,3 +80,6 @@ if __name__ == '__main__':
 
     else:
         pass
+
+    exit(0)
+

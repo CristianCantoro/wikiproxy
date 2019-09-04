@@ -1,4 +1,5 @@
-vikiansiklopedi.org {
+*.vikiansiklopedi.org {
+    tls ${tls_email}
     redir {
         / https://github.com/CristianCantoro/wikimirror 303
     }
