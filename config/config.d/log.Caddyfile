@@ -1,14 +1,13 @@
-log /var/log/caddy/ access.log {
+log / /var/log/caddy/access.log "{remote} - {host} - [{when}] \"{method} {uri} {proto}\" {status} {size}i \"{>Referer}\" \"{>User-Agent}\"" {
     rotate_size 100
-    rotate_age  365
+    rotate_age  14
     rotate_keep 20
     rotate_compress
-    ipmask 255.255.255.0 ffff:ffff:ffff:ffff::
 }
 
 errors /var/log/caddy/error.log {
     rotate_size 100
-    rotate_age  365
+    rotate_age  14
     rotate_keep 20
     rotate_compress
 }
