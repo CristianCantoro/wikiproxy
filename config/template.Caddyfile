@@ -7,8 +7,11 @@ ${lang}.${domain} {
         /wiki/${main_page}
     }
 
-    proxy / https://${lang}.wikipedia.org
-    import config.d/log.Caddyfile
+    proxy / https://${lang}.wikipedia.org {
+        header_upstream Host {host}
+        header_upstream X-Real-IP {remote}
+        header_upstream X-Forwarded-Proto {scheme}
+    }
 }
 
 ${lang}.m.${domain} {
@@ -20,7 +23,10 @@ ${lang}.m.${domain} {
         /wiki/${main_page}
     }
 
-    proxy / https://${lang}.m.wikipedia.org
-    import config.d/log.Caddyfile
+    proxy / https://${lang}.m.wikipedia.org {
+        header_upstream Host {host}
+        header_upstream X-Real-IP {remote}
+        header_upstream X-Forwarded-Proto {scheme}
+    }
 }
 
