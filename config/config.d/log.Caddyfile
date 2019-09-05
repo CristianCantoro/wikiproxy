@@ -1,13 +1,13 @@
 log / /var/log/caddy/access.log "{remote} - {host} - [{when}] \"{method} {uri} {proto}\" {status} {size}i \"{>Referer}\" \"{>User-Agent}\"" {
     rotate_size 100
     rotate_age  14
-    rotate_keep 20
+    rotate_keep 28
     rotate_compress
 }
 
 errors /var/log/caddy/error.log {
     rotate_size 100
     rotate_age  14
-    rotate_keep 20
+    rotate_keep 28
     rotate_compress
 }

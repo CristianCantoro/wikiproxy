@@ -2,17 +2,14 @@
     tls {
         dns ${dns_provider}
     }
-    ratelimit * / 50 100 second
-
-    import config.d/log.Caddyfile
 }
 
 vikiansiklopedi.org {
-    tls {
-        wildcard
-    }
     redir {
         / https://github.com/CristianCantoro/wikimirror 303
     }
+
+    ratelimit * / 50 100 second
+    import config.d/log.Caddyfile
 }
 

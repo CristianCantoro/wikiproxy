@@ -8,10 +8,13 @@ ${lang}.${domain} {
     }
 
     proxy / https://${lang}.wikipedia.org {
-        header_upstream Host {host}
         header_upstream X-Real-IP {remote}
         header_upstream X-Forwarded-Proto {scheme}
     }
+
+    ratelimit * / 50 100 second
+    import config.d/log.Caddyfile
+
 }
 
 ${lang}.m.${domain} {
@@ -24,9 +27,11 @@ ${lang}.m.${domain} {
     }
 
     proxy / https://${lang}.m.wikipedia.org {
-        header_upstream Host {host}
         header_upstream X-Real-IP {remote}
         header_upstream X-Forwarded-Proto {scheme}
     }
+
+    ratelimit * / 50 100 second
+    import config.d/log.Caddyfile
 }
 
