@@ -6,7 +6,7 @@
 
 vikiansiklopedi.org {
     redir {
-        / https://github.com/CristianCantoro/wikimirror 303
+        / https://github.com/CristianCantoro/wikiproxy 303
     }
 
     ratelimit * / 50 100 second
