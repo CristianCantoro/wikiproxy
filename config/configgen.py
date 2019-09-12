@@ -72,11 +72,11 @@ if __name__ == '__main__':
                 rendered_head = template_head.substitute(**config['head'])
                 outfile.write(rendered_head)
 
-            for lang, main in wikis.items():
+            for lang, main in sorted(wikis.items()):
                 rendered = template.substitute(domain=args.domain,
                                                lang=lang,
                                                main_page=main,
-                                               **config['template'],
+                                               **config['template']
                                                )
                 outfile.write(rendered)
 
