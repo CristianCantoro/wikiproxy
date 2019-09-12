@@ -6,11 +6,13 @@ Idea from [Matt Holt](https://twitter.com/mholt6/status/858356637937016832), the
 
 This is a work in progress, the goal is to have a Docker container and a set of scripts so that it is super easy (and fast!) to deploy a Wikipedia proxy. Ideally, you should only need a domain and a server with Docker.
 
+
 # Plugins
 
 We are using Caddy with these additional plugins:
 * [`http.ratelimit`](https://caddyserver.com/docs/http.ratelimit)
 * [`dns <provider>`](https://caddyserver.com/docs/tls.dns.ovh)
+* [`http.cache`](https://caddyserver.com/docs/http.cache)
 
 
 # Usage

@@ -7,7 +7,6 @@ ${lang}.${domain} {
         /wiki/${main_page}
     }
 
-
     proxy / https://${lang}.wikipedia.org {
         header_upstream Host {>Host}
         header_upstream X-Real-IP {remote}
@@ -17,6 +16,7 @@ ${lang}.${domain} {
 
         header_downstream Location ${lang}.wikipedia.org ${lang}.${domain}
     }
+    cache
 
     ratelimit * / 50 100 second
     import config.d/log.Caddyfile
@@ -41,6 +41,7 @@ ${lang}.m.${domain} {
 
         header_downstream Location ${lang}.m.wikipedia.org ${lang}.m.${domain}
     }
+    cache
 
     ratelimit * / 50 100 second
     import config.d/log.Caddyfile
