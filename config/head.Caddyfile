@@ -4,6 +4,12 @@
     }
 }
 
+*.m.vikiansiklopedi.org {
+    tls {
+        dns ${dns_provider}
+    }
+}
+
 vikiansiklopedi.org {
     redir {
         / https://github.com/CristianCantoro/wikiproxy 303
