@@ -8,12 +8,7 @@ ${lang}.${domain} {
     }
 
     proxy / https://${lang}.wikipedia.org {
-        header_upstream Host {>Host}
-        header_upstream X-Real-IP {remote}
-        header_upstream X-Forwarded-For {remote}
-        header_upstream X-Forwarded-Port {server_port}
-        header_upstream X-Forwarded-Proto {scheme}
-
+        import config.d/proxy.Caddyfile
         header_downstream Location ${lang}.wikipedia.org ${lang}.${domain}
     }
     cache
@@ -33,12 +28,7 @@ ${lang}.m.${domain} {
     }
 
     proxy / https://${lang}.m.wikipedia.org {
-        header_upstream Host {>Host}
-        header_upstream X-Real-IP {remote}
-        header_upstream X-Forwarded-For {remote}
-        header_upstream X-Forwarded-Port {server_port}
-        header_upstream X-Forwarded-Proto {scheme}
-
+        import config.d/proxy.Caddyfile
         header_downstream Location ${lang}.m.wikipedia.org ${lang}.m.${domain}
     }
     cache
