@@ -1,9 +1,6 @@
 ---
 layout: default
-title:  Wikiproxy
 ---
-
-Set up a proxy of Wikipedia using Caddy Server. Formerly known as **wikiproxy**.
 
 ## Basic Idea
 
@@ -23,7 +20,7 @@ We are using Caddy with these additional plugins:
 ### configgen.py
 
 ```text
-./configgen.py config -h                                                                                                                                                               2 ↵
+./configgen.py config -h
 usage: configgen.py config [-h] [-c CONFIG] [--head HEAD] [-t TEMPLATE]
                            [--tail TAIL] [-o OUTPUT] [-w WIKIS]
                            <domain>
