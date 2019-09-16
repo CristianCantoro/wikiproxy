@@ -11,8 +11,8 @@
 }
 
 vikiansiklopedi.org {
-    redir {
-        / https://github.com/CristianCantoro/wikiproxy 303
+    proxy / https://cristiancantoro.github.io/wikiproxy/ {
+        import config.d/proxy.Caddyfile
     }
 
     ratelimit * / 50 100 second

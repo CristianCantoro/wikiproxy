@@ -2,6 +2,7 @@ ${lang}.${domain} {
     tls {
         wildcard
     }
+
     redir {
         if {uri} is /
         /wiki/${main_page}
@@ -21,6 +22,7 @@ ${lang}.m.${domain} {
     tls {
         wildcard
     }
+
     redir {
         if {uri} is /
         /wiki/${main_page}
