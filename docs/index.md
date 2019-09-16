@@ -1,5 +1,7 @@
-wikiproxy
----------
+---
+layout: default
+title:  Wikiproxy
+---
 
 Set up a proxy of Wikipedia using Caddy Server. Formerly known as **wikiproxy**.
 
