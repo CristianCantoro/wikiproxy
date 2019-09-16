@@ -12,7 +12,7 @@ This is a work in progress, the goal is to have a Docker container and a set of 
 We are using Caddy with these additional plugins:
 * [`http.ratelimit`](https://caddyserver.com/docs/http.ratelimit)
 * [`dns <provider>`](https://caddyserver.com/docs/tls.dns.ovh)
-* [`http.cache`](https://caddyserver.com/docs/http.cache)
+* <s>[`http.cache`](https://caddyserver.com/docs/http.cache)</s>, currently disabled (see below)
 
 
 # Usage
@@ -27,6 +27,7 @@ This should work like this:
 
 * when visiting from mobile, the user gets redirected to `<lang>.m.wikipedia.org` regardless of the originating doman, the right thing to do would be redirect users to `<lang>.m.<original_domain.tld>`).
 * <s>wikilinks point to the respective domain at wikipedia.org, this issue is tracked on [Phabricator][Phabricator] as [Core should be aware of the domain it is running on and render mobile domains where necessary][T156847]</s> (wikilinks seems correct, even if the bug is still valid).
+* when caching is enable, memory usage crawls up until the server is out-of-memory, see [caddy-cache issue #42](https://github.com/nicolasazrak/caddy-cache/issues/42#issuecomment-531730785).
 
 [CaddyForum]: https://caddy.community/t/how-to-serve-many-subdomains/2169
 [LE_rate_limit]: https://letsencrypt.org/docs/rate-limits/
