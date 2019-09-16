@@ -2,7 +2,7 @@ all: build configfile validate proxy
 
 build:
 	docker build \
-		--build-arg plugins=http.cache,tls.dns.ovh \
+		--build-arg plugins=ratelimit,cache,ovh \
 		--tag wikiproxy \
 		github.com/abiosoft/caddy-docker.git
 
