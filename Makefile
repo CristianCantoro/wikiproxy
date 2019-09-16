@@ -1,14 +1,19 @@
-all: configfile validate mirror
+all: build configfile validate proxy
 
-# WIKIMIRROR_DOMAIN and WIKIMIRROR_TLS
-# are defined in a file .env file that must be placed in the repo root
-# Source this file before launching `make configfile`.
+build:
+	docker build \
+		--build-arg plugins=http.cache,tls.dns.ovh \
+		--tag wikiproxy \
+		github.com/abiosoft/caddy-docker.git
+
+# WIKIPROXY_DOMAIN is defined in a file .env file that must be placed in the
+# repo root. Source this file before launching `make configfile`.
 configfile:
 	@echo '1. Generating the configfile... '
-	[ ! -z "${WIKIMIRROR_DOMAIN}" ] && [ ! -z "${WIKIMIRROR_TLS}" ] && \
-	cd config && python3 configgen.py "$(WIKIMIRROR_DOMAIN)" \
-		--tls "$(WIKIMIRROR_TLS)" \
+	[ -n "${WIKIPROXY_DOMAIN}" ] && cd config && \
+	python3 configgen.py config "$(WIKIPROXY_DOMAIN)" \
 		--head head.Caddyfile
+	rsync -a config/config.d/ caddy/config.d/
 	@echo '->  success'
 
 install: install-systemd
@@ -19,13 +24,14 @@ install-systemd:
 install-upstart:
 	cp init/caddy.upstart /etc/init/
 
-mirror:
+proxy:
 	docker run --rm \
 		--name wikimirror \
 		-v "$(PWD)"/caddy/Caddyfile:/etc/Caddyfile \
+		-v "$(PWD)"/caddy/config.d:/etc/config.d \
 		-v "$(HOME)"/.caddy:/root/.caddy \
 		-p 80:80 -p 443:443 \
-		abiosoft/caddy
+		wikiproxy
 
 stop:
 	docker stop wikimirror
@@ -35,13 +41,19 @@ test:
 		-v "$(PWD)"/caddy/test.Caddyfile:/etc/Caddyfile \
 		-v "$(HOME)"/.caddy:/root/.caddy \
 		-p 80:80 -p 443:443 \
-		abiosoft/caddy --ca https://acme-staging.api.letsencrypt.org/directory
+		wikiproxy \
+			--ca https://acme-staging.api.letsencrypt.org/directory
 
 validate:
 	@echo '2. Validate the configfile... '
-	docker run --rm \
+	docker run \
+		--rm \
 		-v "$(PWD)"/caddy/Caddyfile:/etc/Caddyfile \
+		-v "$(PWD)"/caddy/config.d:/etc/config.d \
 		-v "$(HOME)"/.caddy:/root/.caddy \
+		--env-file "$(PWD)"/caddy/*.sh \
 		-p 80:80 -p 443:443 \
-		abiosoft/caddy --conf /etc/Caddyfile --validate
+		wikiproxy \
+			--conf /etc/Caddyfile \
+			--validate
 	@echo '->  success'
