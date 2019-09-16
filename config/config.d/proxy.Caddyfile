@@ -1,4 +1,3 @@
-header_upstream Host {>Host}
 header_upstream X-Real-IP {remote}
 header_upstream X-Forwarded-For {remote}
 header_upstream X-Forwarded-Port {server_port}
