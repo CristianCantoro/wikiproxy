@@ -1,6 +1,6 @@
 # wikiproxy
 
-A Docker container to set up a proxy of Wikipedia using Caddy Server. Formerly also known as **wikiproxy**.
+A Docker container to set up a proxy of Wikipedia using Caddy Server. Formerly known as **wikimirror**.
 
 Idea from [Matt Holt](https://twitter.com/mholt6/status/858356637937016832), the creator of [Caddy Server](https://caddyserver.com/).
 
@@ -33,3 +33,8 @@ This should work like this:
 [LE_rate_limit]: https://letsencrypt.org/docs/rate-limits/
 [Phabricator]: https://phabricator.wikimedia.org/
 [T156847]: https://phabricator.wikimedia.org/T156847
+
+
+## License
+
+This project is released under the MIT license.

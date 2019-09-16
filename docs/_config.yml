@@ -1,1 +1,3 @@
 theme: jekyll-theme-cayman
+title: Wikiproxy
+description: Set up a proxy of Wikipedia using Caddy Server. Formerly known as wikimirror.
