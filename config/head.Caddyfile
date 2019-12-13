@@ -1,4 +1,5 @@
 *.vikiansiklopedi.org {
+    tls {$$TLS_EMAIL}
     tls {
         dns ${dns_provider}
     }
