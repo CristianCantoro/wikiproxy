@@ -1,17 +1,17 @@
-*.vikiansiklopedi.org {
+*.${domain} {
     tls {$$TLS_EMAIL}
     tls {
         dns ${dns_provider}
     }
 }
 
-*.m.vikiansiklopedi.org {
+*.m.${domain} {
     tls {
         dns ${dns_provider}
     }
 }
 
-vikiansiklopedi.org {
+${domain} {
     redir {
         / https://cristiancantoro.github.io/wikiproxy/ 303
     }

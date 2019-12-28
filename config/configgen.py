@@ -69,7 +69,8 @@ if __name__ == '__main__':
             if args.head is not None:
                 with open(args.head) as head_file:
                     template_head = Template(head_file.read())
-                rendered_head = template_head.substitute(**config['head'])
+                rendered_head = template_head.substitute(domain=args.domain,
+                                                         **config['head'])
                 outfile.write(rendered_head)
 
             for lang, main in sorted(wikis.items()):
