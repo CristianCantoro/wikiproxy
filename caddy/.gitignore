@@ -1,10 +1,6 @@
-# ignore caddyfiles
-Caddyfile
-Caddyfile.old
-
-# ignore config.d directory
-config.d/
-
-# ignore env files
-ovh.sh
-ovh.test.sh
+# ignore everything except .gitignore, .gitkeep
+# see:
+#   https://stackoverflow.com/a/987162/2377454
+*
+!.gitignore
+!.gitkeep
