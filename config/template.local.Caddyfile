@@ -1,0 +1,35 @@
+${lang}.${domain} {
+    tls off
+
+    redir {
+        if {uri} is /
+        /wiki/${main_page}
+    }
+
+    proxy / https://${lang}.wikipedia.org {
+        import config.d/proxy.Caddyfile
+        header_downstream Location ${lang}.wikipedia.org ${lang}.${domain}
+    }
+
+    ratelimit * / 50 100 second
+    import config.d/log.Caddyfile
+
+}
+
+${lang}.m.${domain} {
+    tls off
+
+    redir {
+        if {uri} is /
+        /wiki/${main_page}
+    }
+
+    proxy / https://${lang}.m.wikipedia.org {
+        import config.d/proxy.Caddyfile
+        header_downstream Location ${lang}.m.wikipedia.org ${lang}.m.${domain}
+    }
+
+    ratelimit * / 50 100 second
+    import config.d/log.Caddyfile
+}
+

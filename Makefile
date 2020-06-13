@@ -10,11 +10,11 @@ WIKIPROXY_TEMPLATE ?= template.Caddyfile
 #   1. Variable name(s) to test.
 #   2. (optional) Error message to print.
 check_defined = \
-    $(strip $(foreach 1,$1, \
-        $(call __check_defined,$1,$(strip $(value 2)))))
+	$(strip $(foreach 1,$1, \
+		$(call __check_defined,$1,$(strip $(value 2)))))
 __check_defined = \
-    $(if $(value $1),, \
-      $(error Undefined $1$(if $2, ($2))))
+	$(if $(value $1),, \
+	  $(error Undefined $1$(if $2, ($2))))
 
 all: build configfile validate proxy
 
@@ -67,19 +67,21 @@ test: build configfile validate
 		  -ca https://acme-staging-v02.api.letsencrypt.org/directory \
 		  -agree
 
-# test-local: WIKIPROXY_DOMAIN = localhost
-# test-local: WIKIPROXY_CADDYFILE = local.Caddyfile
-# test-local: WIKIPROXY_HEAD_TEMPLATE = head.test-local.Caddyfile
-# test-local: WIKIPROXY_TEMPLATE = template.test-local.Caddyfile
-# test-local: build configfile validate
-# 	docker run \
-# 		-v "$(PWD)"/caddy:/etc/caddy \
-# 		-v "$(HOME)"/.caddy:/root/.caddy \
-# 		--env-file "$(PWD)"/caddy/env.test.sh \
-# 		-p 80:80 -p 443:443 \
-# 		wikiproxy \
-# 		  -env \
-# 		  -conf /etc/caddy/"$(WIKIPROXY_CADDYFILE)"
+test-local: WIKIPROXY_DOMAIN = localhost
+test-local: WIKIPROXY_CADDYFILE = local.Caddyfile
+test-local: WIKIPROXY_HEAD_TEMPLATE = head.local.Caddyfile
+test-local: WIKIPROXY_TEMPLATE = template.local.Caddyfile
+test-local: build configfile validate
+	$(eval tmpdir := $(shell mktemp --directory wikiproxy.log.XXXXXX))
+	docker run \
+		--rm \
+		-v "$(PWD)"/caddy:/etc/caddy \
+		-v "$(PWD)/$(tmpdir)":/var/log/caddy/ \
+		--env WIKIPROXY_DOMAIN="${WIKIPROXY_DOMAIN}" \
+		-p 6000:6000 \
+		wikiproxy \
+		  -conf /etc/caddy/"$(WIKIPROXY_CADDYFILE)"
+	rm -rf ${tmpdir}
 
 validate:
 	@echo '2. Validate the configfile... '

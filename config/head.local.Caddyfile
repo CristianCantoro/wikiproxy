@@ -1,0 +1,12 @@
+*.${domain} {
+    tls off
+}
+
+${domain} {
+    redir {
+        / https://cristiancantoro.github.io/wikiproxy/ 303
+    }
+
+    ratelimit * / 50 100 second
+    import config.d/log.Caddyfile
+}
