@@ -2,6 +2,7 @@ TEST := $(filter test,$(MAKECMDGOALS))
 WIKIPROXY_CADDYFILE ?= Caddyfile
 WIKIPROXY_HEAD_TEMPLATE ?= head.Caddyfile
 WIKIPROXY_TEMPLATE ?= template.Caddyfile
+WIKIPROXY_CADDY_PLUGINS ?= ratelimit,ovh
 
 # Check that given variables are set and all have non-empty values,
 # die with an error otherwise.
@@ -20,7 +21,8 @@ all: build configfile validate proxy
 
 build:
 	docker build \
-		--build-arg plugins=ratelimit,cache,ovh \
+		--no-cache \
+		$(if $(WIKIPROXY_CADDY_PLUGINS),--build-arg "plugins=${WIKIPROXY_CADDY_PLUGINS}",) \
 		--tag wikiproxy \
 		github.com/abiosoft/caddy-docker.git
 
@@ -71,6 +73,7 @@ test-local: WIKIPROXY_DOMAIN = localhost
 test-local: WIKIPROXY_CADDYFILE = local.Caddyfile
 test-local: WIKIPROXY_HEAD_TEMPLATE = head.local.Caddyfile
 test-local: WIKIPROXY_TEMPLATE = template.local.Caddyfile
+test-local: WIKIPROXY_CADDY_PLUGINS =
 test-local: build configfile validate
 	$(eval tmpdir := $(shell mktemp --directory wikiproxy.log.XXXXXX))
 	docker run \
