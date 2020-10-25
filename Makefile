@@ -81,15 +81,17 @@ test-local: WIKIPROXY_TEMPLATE = template.local.Caddyfile
 test-local: WIKIPROXY_CADDY_PLUGINS =
 test-local: build configfile validate
 	$(eval tmpdir := $(shell mktemp --directory wikiproxy.log.XXXXXX))
-	docker run \
+	bash -c \
+	"trap 'rm -rf ${tmpdir}' EXIT; \
+	 docker run \
 		--rm \
 		-v "$(PWD)"/caddy:/etc/caddy \
 		-v "$(PWD)/$(tmpdir)":/var/log/caddy/ \
 		--env WIKIPROXY_DOMAIN="${WIKIPROXY_DOMAIN}" \
 		-p 2015:2015 \
 		wikiproxy \
-		  -conf /etc/caddy/"$(WIKIPROXY_CADDYFILE)"
-	rm -rf ${tmpdir}
+		  -conf /etc/caddy/"$(WIKIPROXY_CADDYFILE)" \
+	"
 
 validate:
 	@echo '2. Validate the configfile... '
