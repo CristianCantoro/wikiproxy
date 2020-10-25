@@ -86,7 +86,7 @@ test-local: build configfile validate
 		-v "$(PWD)"/caddy:/etc/caddy \
 		-v "$(PWD)/$(tmpdir)":/var/log/caddy/ \
 		--env WIKIPROXY_DOMAIN="${WIKIPROXY_DOMAIN}" \
-		-p 6000:6000 \
+		-p 2015:2015 \
 		wikiproxy \
 		  -conf /etc/caddy/"$(WIKIPROXY_CADDYFILE)"
 	rm -rf ${tmpdir}
