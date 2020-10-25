@@ -19,12 +19,17 @@ __check_defined = \
 
 all: build configfile validate proxy
 
+WIKIPROXY_IMAGE := $(shell docker images -q wikiproxy 2> /dev/null)
+ifeq ($(WIKIPROXY_IMAGE),)
 build:
 	docker build \
 		--no-cache \
 		$(if $(WIKIPROXY_CADDY_PLUGINS),--build-arg "plugins=${WIKIPROXY_CADDY_PLUGINS}",) \
 		--tag wikiproxy \
 		github.com/abiosoft/caddy-docker.git
+else
+build:
+endif
 
 configfile:
 	@echo '1. Generating the configfile... '
@@ -45,7 +50,7 @@ install-systemd:
 install-upstart:
 	cp init/caddy.upstart /etc/init/
 
-proxy: build configfile
+proxy: build configfile validate
 	docker run --rm \
 		--name wikimirror \
 		-v "$(PWD)"/caddy/Caddyfile:/etc/Caddyfile \
