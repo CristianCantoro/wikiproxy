@@ -2,7 +2,7 @@ TEST := $(filter test,$(MAKECMDGOALS))
 WIKIPROXY_CADDYFILE ?= Caddyfile
 WIKIPROXY_HEAD_TEMPLATE ?= head.Caddyfile
 WIKIPROXY_TEMPLATE ?= template.Caddyfile
-WIKIPROXY_CADDY_PLUGINS ?= ratelimit,ovh
+WIKIPROXY_CADDY_PLUGINS ?= ovh
 
 # Check that given variables are set and all have non-empty values,
 # die with an error otherwise.
