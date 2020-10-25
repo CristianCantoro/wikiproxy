@@ -11,7 +11,6 @@ ${lang}.${domain} {
         header_downstream Location ${lang}.wikipedia.org ${lang}.${domain}
     }
 
-    ratelimit * / 50 100 second
     import config.d/log.Caddyfile
 
 }
@@ -29,7 +28,6 @@ ${lang}.m.${domain} {
         header_downstream Location ${lang}.m.wikipedia.org ${lang}.m.${domain}
     }
 
-    ratelimit * / 50 100 second
     import config.d/log.Caddyfile
 }
 
