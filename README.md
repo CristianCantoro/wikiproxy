@@ -36,7 +36,7 @@ with a demo at the end, the presentation is in Italian, but you'll get the gist.
 
 ## Known limitations
 
-* building caddy with the `ratelimit` plugin fails a [`fix`](https://github.com/abiosoft/caddy-docker/pull/223)
+* building caddy with the `ratelimit` plugin fails. A [`fix`](https://github.com/abiosoft/caddy-docker/pull/223)
   is being discussed on caddy's repo, but I wasn't able to make it work. Since
   the plugin is not really necessary, I removed it.
 * when visiting from mobile, the user gets redirected to
