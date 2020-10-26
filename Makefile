@@ -56,6 +56,7 @@ proxy: build configfile validate
 		-v "$(PWD)"/caddy/Caddyfile:/etc/Caddyfile \
 		-v "$(PWD)"/caddy/config/config.d:/etc/config.d \
 		-v "$(HOME)"/.caddy:/root/.caddy \
+
 		-p 80:80 -p 443:443 \
 		wikiproxy
 
@@ -87,6 +88,7 @@ test-local: build configfile validate
 		--rm \
 		-v "$(PWD)"/caddy:/etc/caddy \
 		-v "$(PWD)/$(tmpdir)":/var/log/caddy/ \
+		$(if $(ENV),--env-file $(ENV),) \
 		--env WIKIPROXY_DOMAIN="${WIKIPROXY_DOMAIN}" \
 		-p 2015:2015 \
 		wikiproxy \
@@ -101,6 +103,7 @@ validate:
 		-v "$(HOME)"/.caddy:/root/.caddy \
 		-p 80:80 -p 443:443 \
 		$(if $(TEST),--env-file "$(PWD)"/caddy/env.test.sh,) \
+		$(if $(ENV),--env-file $(ENV),) \
 		wikiproxy \
 		  -conf /etc/caddy/"$(WIKIPROXY_CADDYFILE)" \
 		  -validate
